@@ -1,0 +1,762 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+
+	{% block content %}
+    <div class="container mt-5 pt-5">
+        <div class="row">
+           <!-- user side bar -->
+           {% include "layouts/usersidebar.html" %}
+            <div class="col-lg-9 my-lg-0 my-1">
+                <div id="main-content" class="bg-white border">
+                    <div class="d-flex flex-column">
+                        <div class="h5">Hello {{user.first_name}},</div>
+                        <div>Logged in as: {{user.email}}</div>
+                    </div>
+                    <div class="d-flex my-4 flex-wrap">
+                        <div class="box me-4 my-1 bg-light">
+                            <img src="{% static '/images/icons/cardboard.png' %}"
+                                alt="">
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="tag">Orders placed</div>
+                                <div class="ms-auto number">10</div>
+                            </div>
+                        </div>
+                        <div class="box me-4 my-1 bg-light">
+                            <img src="{% static '/images/icons/cart.png' %}"
+                                alt="">
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="tag">Items in Cart</div>
+                                <div class="ms-auto number">{{cart_count}}</div>
+                            </div>
+                        </div>
+                        <div class="box me-4 my-1 bg-light">
+                            <img src="{% static '/images/icons/love.png' %}"
+                                alt="">
+                            <div class="d-flex align-items-center mt-2">
+                                <div class="tag">Wishlist</div>
+                                <div class="ms-auto number">{{wish_counter}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid">
+                        <article class="postcard dark blue">
+                            <a class="postcard__img_link" href="#">
+                                
+                            </a>
+                            <div class="postcard__text">
+                                <div class=""><h2>Order <b>invoice</b></h2></div>
+                                <div class="postcard__subtitle small">
+                                    <time datetime="2020-05-25 12:00:00">
+                                        <i class="fas fa-calendar-alt mr-2"></i>{{order.created_at}}
+                                    </time>
+                                </div>
+                                <div class="postcard__bar"></div>
+                                <div class="postcard__preview-txt">
+                                    <ul class="list-unstyled text-left">
+                                        <li><strong>Invoiced To</strong></li>
+                                        <li>{{order.full_name}}</li>
+                                        <li>{{order.full_address}}</li>
+                                        <li>{{order.city}}, {{order.state}}</li>
+                                        <li>{{order.country}}</li>
+                                    </ul>
+                                   
+                            
+                            </div>
+                        </article>
+                </div>
+                    <div class="container-lg">
+                        <div class="table-responsive">
+                            <div class="table-wrapper">
+                                <div class="table-title">
+                                    <div class="row">
+                                        <div class="col-sm-8"><h2>Order <b>Details</b></h2></div>
+                                        <!-- <div class="col-sm-4">
+                                            <button type="button" class="btn btn-info add-new"><i class="fa fa-plus"></i> Add New</button>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>product</th>
+                                            <th>quantity</th>
+                                            <th>Total</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in order_detail %}
+                                        <tr>
+                                            <td>{{item.product.product_name}}</td>
+                                            <p class="text-muted small">
+                                             
+                                            <td>{{item.quantity}}</td>
+                                            <td>{{item.product_price}}</td>
+                                            <td>
+                                                <a href="{% url 'cancel_order' order.id %}" class="alert alert-danger" role="alert" onclick="return confirm('Are you sure you want to cancel the order with the order number {{order.order_number}}? You cannot undo the changes!')"><button type="button" class="btn btn-danger"><i class="fa fa-plus"></i> cancel </button></a>
+                                            </td>
+                                        </tr>
+                                        
+                                       
+                                        {% endfor %}   
+                                    </tbody>
+                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <style>
+        /*-----------------userdash-------------*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap');
+
+/* Resetting */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+nav {
+    min-height: 70px;
+}
+
+nav .navbar-brand .logo {
+    padding: 10px 15px;
+    border-radius: 8px;
+}
+
+nav .navbar-brand .logo .h2 {
+    margin: 0;
+}
+
+nav .navbar-brand .h4 {
+    margin-bottom: 0px;
+    font-weight: 900;
+}
+
+nav .navbar-brand .fs-6 {
+    font-size: 0.88rem !important;
+}
+
+nav ul li {
+    padding: 0 20px;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #333;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #4e2296;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+    color: #451296;
+}
+
+nav ul li a .cart {
+    padding: 4px 6px;
+    border-radius: 6px;
+    position: relative;
+    display: inline;
+}
+
+nav ul li a .cart::after {
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #ff5252;
+    top: -1px;
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+#sidebar {
+    padding: 15px 0px 15px 0px;
+    border-radius: 10px;
+}
+
+#sidebar .h4 {
+    font-weight: 500;
+    padding-left: 15px;
+}
+
+#sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0rem;
+}
+
+#sidebar ul li {
+    padding: 10px 0;
+    display: block;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-left: 5px solid transparent;
+}
+
+#sidebar ul li.active {
+    border-left: 5px solid #ff5252;
+    background-color: #44007c;
+}
+
+#sidebar ul li a {
+    display: block;
+}
+
+#sidebar ul li a .fas,
+#sidebar ul li a .far {
+    color: #ddd;
+}
+
+#sidebar ul li a .link {
+    color: #fff;
+    font-weight: 500;
+}
+
+#sidebar ul li a .link-desc {
+    font-size: 0.8rem;
+    color: #ddd;
+}
+
+#main-content {
+    padding: 30px;
+    border-radius: 15px;
+}
+
+#main-content .h5,
+#main-content .text-uppercase {
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+#main-content .h5+div {
+    font-size: 0.9rem;
+}
+
+#main-content .box {
+    padding: 10px;
+    border-radius: 6px;
+    width: 170px;
+    height: 90px;
+}
+
+#main-content .box img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+#main-content .box .tag {
+    font-size: 0.9rem;
+    color: #000;
+    font-weight: 500;
+}
+
+#main-content .box .number {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.order {
+    padding: 10px 30px;
+    min-height: 150px;
+}
+
+.order .order-summary {
+    height: 100%;
+}
+
+.order .blue-label {
+    background-color: #aeaeeb;
+    color: #0046dd;
+    font-size: 0.9rem;
+    padding: 0px 3px;
+}
+
+.order .green-label {
+    background-color: #a8e9d0;
+    color: #008357;
+    font-size: 0.9rem;
+    padding: 0px 3px;
+}
+
+.order .fs-8 {
+    font-size: 0.85rem;
+}
+
+.order .rating img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.order .rating .fas,
+.order .rating .far {
+    font-size: 0.9rem;
+}
+
+.order .rating .fas {
+    color: #daa520;
+}
+
+.order .status {
+    font-weight: 600;
+}
+
+.order .btn.btn-primary {
+    background-color: #fff;
+    color: #4e2296;
+    border: 1px solid #4e2296;
+}
+
+.order .btn.btn-primary:hover {
+    background-color: #4e2296;
+    color: #fff;
+}
+
+.order .progressbar-track {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.order .progressbar-track .progressbar {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0rem;
+}
+
+.order .progressbar-track .progressbar li {
+    font-size: 1.5rem;
+    border: 1px solid #333;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: #dddddd;
+    z-index: 100;
+    position: relative;
+}
+
+.order .progressbar-track .progressbar li.green {
+    border: 1px solid #007965;
+    background-color: #d5e6e2;
+}
+
+.order .progressbar-track .progressbar li::after {
+    position: absolute;
+    font-size: 0.9rem;
+    top: 50px;
+    left: 0px;
+}
+
+#tracker {
+    position: absolute;
+    border-top: 1px solid #bbb;
+    width: 100%;
+    top: 25px;
+}
+
+#step-1::after {
+    content: 'Placed';
+}
+
+#step-2::after {
+    content: 'Accepted';
+    left: -10px;
+}
+
+#step-3::after {
+    content: 'Packed';
+}
+
+#step-4::after {
+    content: 'Shipped';
+}
+
+#step-5::after {
+    content: 'Delivered';
+    left: -10px;
+}
+
+
+
+/* Backgrounds */
+.bg-purple {
+    background-color: #55009b;
+}
+
+.bg-light {
+    background-color: #f0ecec !important;
+}
+
+.green {
+    color: #007965 !important;
+}
+
+/* Media Queries */
+@media(max-width: 1199.5px) {
+    nav ul li {
+        padding: 0 10px;
+    }
+}
+
+@media(max-width: 500px) {
+    .order .progressbar-track .progressbar li {
+        font-size: 1rem;
+    }
+
+    .order .progressbar-track .progressbar li::after {
+        font-size: 0.8rem;
+        top: 35px;
+    }
+
+    #tracker {
+        top: 20px;
+    }
+}
+
+@media(max-width: 440px) {
+    #main-content {
+        padding: 20px;
+    }
+
+    .order {
+        padding: 20px;
+    }
+
+    #step-4::after {
+        left: -5px;
+    }
+}
+
+@media(max-width: 395px) {
+    .order .progressbar-track .progressbar li {
+        font-size: 0.8rem;
+    }
+
+    .order .progressbar-track .progressbar li::after {
+        font-size: 0.7rem;
+        top: 35px;
+    }
+
+    #tracker {
+        top: 15px;
+    }
+
+    .order .btn.btn-primary {
+        font-size: 0.85rem;
+    }
+}
+
+@media(max-width: 355px) {
+    #main-content {
+        padding: 15px;
+    }
+
+    .order {
+        padding: 10px;
+    }
+}
+/*-----------------userdash ends -----------------------*/
+    </style>
+
+<style>
+    
+ 
+    
+    /* Cards */
+    .postcard {
+      flex-wrap: wrap;
+      display: flex;
+      
+      box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
+      border-radius: 10px;
+      margin: 0 0 2rem 0;
+      overflow: hidden;
+      position: relative;
+      color: #020202;
+    
+        &.dark {
+            background-color: #18151f;
+        }
+        &.light {
+            background-color: #e1e5ea;
+        }
+        
+        .t-dark {
+            color: #18151f;
+        }
+        
+      a {
+        color: inherit;
+      }
+        
+        h1,	.h1 {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+        
+        .small {
+            font-size: 80%;
+        }
+    
+      .postcard__title {
+        font-size: 1.75rem;
+      }
+    
+      .postcard__img {
+        max-height: 180px;
+        width: 100%;
+        object-fit: cover;
+        position: relative;
+      }
+    
+      .postcard__img_link {
+        display: contents;
+      }
+    
+      .postcard__bar {
+        width: 50px;
+        height: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+        background-color: #424242;
+        transition: width 0.2s ease;
+      }
+    
+      .postcard__text {
+        padding: 1.5rem;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+      }
+    
+      .postcard__preview-txt {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: justify;
+        height: 100%;
+      }
+    
+      .postcard__tagbox {
+        display: flex;
+        flex-flow: row wrap;
+        font-size: 14px;
+        margin: 20px 0 0 0;
+            padding: 0;
+        justify-content: center;
+    
+        .tag__item {
+          display: inline-block;
+          background: rgba(83, 83, 83, 0.4);
+          border-radius: 3px;
+          padding: 2.5px 10px;
+          margin: 0 5px 5px 0;
+          cursor: default;
+          user-select: none;
+          transition: background-color 0.3s;
+    
+          &:hover {
+            background: rgba(83, 83, 83, 0.8);
+          }
+        }
+      }
+    
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(-70deg, #424242, transparent 50%);
+        opacity: 1;
+        border-radius: 10px;
+      }
+    
+      &:hover .postcard__bar {
+        width: 100px;
+      }
+    }
+    
+    @media screen and (min-width: 769px) {
+      .postcard {
+        flex-wrap: inherit;
+    
+        .postcard__title {
+          font-size: 2rem;
+        }
+    
+        .postcard__tagbox {
+          justify-content: start;
+        }
+    
+        .postcard__img {
+          max-width: 300px;
+          max-height: 100%;
+          transition: transform 0.3s ease;
+        }
+    
+        .postcard__text {
+          padding: 3rem;
+          width: 100%;
+        }
+    
+        .media.postcard__text:before {
+          content: "";
+          position: absolute;
+          display: block;
+          background: #18151f;
+          top: -20%;
+          height: 130%;
+          width: 55px;
+        }
+    
+        &:hover .postcard__img {
+          transform: scale(1.1);
+        }
+    
+        &:nth-child(2n+1) {
+          flex-direction: row;
+        }
+    
+        &:nth-child(2n+0) {
+          flex-direction: row-reverse;
+        }
+    
+        &:nth-child(2n+1) .postcard__text::before {
+          left: -12px !important;
+          transform: rotate(4deg);
+        }
+    
+        &:nth-child(2n+0) .postcard__text::before {
+          right: -12px !important;
+          transform: rotate(-4deg);
+        }
+      }
+    }
+    @media screen and (min-width: 1024px){
+            .postcard__text {
+          padding: 2rem 3.5rem;
+        }
+            
+            .postcard__text:before {
+          content: "";
+          position: absolute;
+          display: block;
+          
+          top: -20%;
+          height: 130%;
+          width: 55px;
+        }
+        
+      .postcard.dark {
+            .postcard__text:before {
+                background: #18151f;
+            }
+      }
+        .postcard.light {
+            .postcard__text:before {
+                background: #e1e5ea;
+            }
+      }
+    }
+    
+    /* COLORS */
+    .postcard .postcard__tagbox .green.play:hover {
+        background: $main-green;
+        color: black;
+    }
+    .green .postcard__title:hover {
+        color: $main-green;
+    }
+    .green .postcard__bar {
+        background-color: $main-green;
+    }
+    .green::before {
+        background-image: linear-gradient(
+            -30deg,
+            $main-green-rgb-015,
+            transparent 50%
+        );
+    }
+    .green:nth-child(2n)::before {
+        background-image: linear-gradient(30deg, $main-green-rgb-015, transparent 50%);
+    }
+    
+    .postcard .postcard__tagbox .blue.play:hover {
+        background: $main-blue;
+    }
+    .blue .postcard__title:hover {
+        color: $main-blue;
+    }
+    .blue .postcard__bar {
+        background-color: $main-blue;
+    }
+    .blue::before {
+        background-image: linear-gradient(-30deg, $main-blue-rgb-015, transparent 50%);
+    }
+    .blue:nth-child(2n)::before {
+        background-image: linear-gradient(30deg, $main-blue-rgb-015, transparent 50%);
+    }
+    
+    .postcard .postcard__tagbox .red.play:hover {
+        background: $main-red;
+    }
+    .red .postcard__title:hover {
+        color: $main-red;
+    }
+    .red .postcard__bar {
+        background-color: $main-red;
+    }
+    .red::before {
+        background-image: linear-gradient(-30deg, $main-red-rgb-015, transparent 50%);
+    }
+    .red:nth-child(2n)::before {
+        background-image: linear-gradient(30deg, $main-red-rgb-015, transparent 50%);
+    }
+    
+    .postcard .postcard__tagbox .yellow.play:hover {
+        background: $main-yellow;
+        color: black;
+    }
+    .yellow .postcard__title:hover {
+        color: $main-yellow;
+    }
+    .yellow .postcard__bar {
+        background-color: $main-yellow;
+    }
+    .yellow::before {
+        background-image: linear-gradient(
+            -30deg,
+            $main-yellow-rgb-015,
+            transparent 50%
+        );
+    }
+    .yellow:nth-child(2n)::before {
+        background-image: linear-gradient(
+            30deg,
+            $main-yellow-rgb-015,
+            transparent 50%
+        );
+    }
+    
+   
+    </style>
+    
+    {% include 'layouts/loader.html' %}
+{% endblock %}

@@ -1,0 +1,211 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% block content %}
+{% block header %}
+	<!-- Header -->
+	<header class="header-v3">
+		<!-- Header desktop -->
+		<div class="container-menu-desktop ">
+			<div class="wrap-menu-desktop">
+				<nav class="limiter-menu-desktop p-l-45">
+					
+					<!-- Logo desktop -->		
+					<a href="#" class="logo">
+						<img src="{% static 'images/icons/logo-02.png' %}" alt="IMG-LOGO">
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li>
+								<a href="index.html">Home</a>
+								<ul class="sub-menu">
+									<li><a href="index.html">Homepage 1</a></li>
+									<li><a href="home-02.html">Homepage 2</a></li>
+									<li><a href="home-03.html">Homepage 3</a></li>
+								</ul>
+							</li>
+
+							<li>
+								<a href="product.html">Shop</a>
+							</li>
+
+							<li class="label1" data-label1="hot">
+								<a href="shoping-cart.html">Features</a>
+							</li>
+
+							<li>
+								<a href="blog.html">Blog</a>
+							</li>
+
+							<li>
+								<a href="about.html">About</a>
+							</li>
+
+							<li>
+								<a href="contact.html">Contact</a>
+							</li>
+						</ul>
+					</div>	
+
+					<!-- Icon header -->
+					<div class="wrap-icon-header flex-w flex-r-m h-full">							
+						
+                        <div class="flex-c-m h-full p-r-25 bor6">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+								<i class="zmdi zmdi-shopping-cart"></i>
+							</div>
+						</div>
+							
+						<div class="flex-c-m h-full p-lr-19">
+							<div class="icon-header-item cl0 hov-cl1 trans-04 p-lr-11 js-show-sidebar">
+								<i class="zmdi zmdi-menu"></i>
+							</div>
+						</div>
+					</div>
+				</nav>
+			</div>	
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->		
+			<div class="logo-mobile">
+				<a href="index.html"><img src="{% static 'images/icons/logo-01.png' %}" alt="IMG-LOGO"></a>
+			</div>
+
+			<!-- Icon header -->
+			<div class="wrap-icon-header flex-w flex-r-m h-full m-r-15">
+				<div class="flex-c-m h-full p-r-5">
+					<div class="icon-header-item cl2 hov-cl1 trans-04 p-lr-11 icon-header-noti js-show-cart" data-notify="2">
+						<i class="zmdi zmdi-shopping-cart"></i>
+					</div>
+				</div>
+			</div>
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+			<ul class="main-menu-m">
+				<li>
+					<a href="index.html">Home</a>
+					<ul class="sub-menu-m">
+						<li><a href="index.html">Homepage 1</a></li>
+						<li><a href="home-02.html">Homepage 2</a></li>
+						<li><a href="home-03.html">Homepage 3</a></li>
+					</ul>
+					<span class="arrow-main-menu-m">
+						<i class="fa fa-angle-right" aria-hidden="true"></i>
+					</span>
+				</li>
+
+				<li>
+					<a href="product.html">Shop</a>
+				</li>
+
+				<li>
+					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
+				</li>
+
+				<li>
+					<a href="blog.html">Blog</a>
+				</li>
+
+				<li>
+					<a href="about.html">About</a>
+				</li>
+
+				<li>
+					<a href="contact.html">Contact</a>
+				</li>
+			</ul>
+		</div>
+
+		<!-- Modal Search -->
+		<div class="modal-search-header flex-c-m trans-04 js-hide-modal-search">
+			<button class="flex-c-m btn-hide-modal-search trans-04">
+				<i class="zmdi zmdi-close"></i>
+			</button>
+
+			<form class="container-search-header">
+				<div class="wrap-search-header">
+					<input class="plh0" type="text" name="search" placeholder="Search...">
+
+					<button class="flex-c-m trans-04">
+						<i class="zmdi zmdi-search"></i>
+					</button>
+				</div>
+			</form>
+		</div>
+	</header>
+{% endblock %}
+<section class="vh-100 md-5"
+  style="background-image: url({% static 'images/background_image.jpg' %}); background-repeat: no-repeat;  background-attachment: fixed; background-size: 100% 100%;">
+  
+   
+     
+   
+  
+  <section class="vh-100 gradient-custom ">
+    <div class="container py-5 h-100 ">
+      <div class="row d-flex justify-content-center align-items-center h-100 ">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+          <div class="card " style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center">
+  
+              <div class="mb-md-5 mt-md-4 pb-5 ">
+  
+              
+                {% include 'layouts/alerts.html' %}
+              <form  id="login" action="{% url 'loginpage' %}" method="post">
+                {% csrf_token %}
+               <div class="form-outline mb-4">
+                  <input type="text" name="email" id="form3Example1cg" class="form-control form-control-lg" placeholder="enter email"/>
+                  <label class="form-label" for="form3Example1cg">Your Email</label>
+                </div>   
+               
+                
+
+              
+                <div class="form-outline mb-4">
+                  <input type="password" name="password" id="form3Example4cdg" class="form-control form-control-lg"  placeholder="Password" />
+                  <label class="form-label" for="form3Example4cdg">Password</label>
+                </div>
+               
+
+                <div class="d-flex justify-content-center">
+                  <button type="submit"
+                    class="btn btn-success btn-block btn-lg gradient-custom-4 text-body">Login</button>
+                    
+                </div>
+               
+               <p class="pt-3" > <a  class=" forget text-decoration-none" href="#">forget password ?</a></p>
+                
+                <p class="text-center text-muted mt-5 mb-0">Don't have  an account? <a href=""
+                    class="fw-bold text-body"><u>signup</u></a></p>
+
+              </form>
+              <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+              <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+</section>
+
+{% include 'layouts/loader.html' %}
+{% endblock %}
