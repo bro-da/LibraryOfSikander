@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'orders',
     'wishlist',
     'category',
+    'vendor'
     
     
 ]
